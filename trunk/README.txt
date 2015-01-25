@@ -1,4 +1,4 @@
-﻿Checkout trunk if you need the entire django serpentine project 
+Checkout trunk if you need the entire django serpentine project 
 It contains settings.py you will have to reajust to your personnal settings (db + path to your files). The checkout initiate a small sqlite database with few tracks. Few samples gpx files are in the media/ folder
 
 If you already have a django project - just checkout the "/trunk/gps/" into a gps folder under your django project part onto your installation. 
@@ -17,5 +17,3 @@ You will have to add 'gps' app and urls to your settings and then run "syncdb" t
   * Gérer les segments de traces 
   * Ajouter des photos dans la trace (click droit ajouter)
   * Repérer les segments analogues
-
-*
