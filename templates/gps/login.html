@@ -1,0 +1,27 @@
+{% extends "gps/base.html" %}
+
+
+
+{% block menu %} {% endblock menu %}
+
+{% block main_content %}
+    <div class="user_message">
+        Bonjour, pour accéder aux fonctionnalités de cette application, il est nécessaire d'avoir un compte enregistré. <br>
+        Le site est en cours de refonte, ses fontionnalités ne sont pour le moment ouvertes qu'aux personnes travaillant au développement <br />
+         Merci de votre compréhension
+
+    </div>
+    <div class="form login center">
+        <form action="" method="post">
+            {% csrf_token %}
+            <table class="center">
+                {{ form.as_table }}
+                    <td><input type="submit" value="Login"/></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+{% endblock main_content %}
+{% block sidebar %}
+    {# pas de sidebar sur la page login #}
+{% endblock sidebar %}

@@ -1,0 +1,19 @@
+{% extends "gps/base.html" %}
+{% block js %}
+    {{ block.super }}
+{% endblock js %}
+{% block main_content %}
+    <div class="user_message">
+    Bienvenue sur Serpentine-GPS, un site qui vous permet de visualiser, analyser et partager vos traces GPS.
+    Ce site est en cours de développement, certaines fonctionnalités ne sont pas stables ou pas encore disponibles, néanmoins on peut déjà faire pas mal de choses.
+    La page <a href="https://code.google.com/p/serpentine/">google code</a> vous permet de savoir où on en est de l'avancement des développements.
+    Je vous invite à ajouter des souhaits et bug reports <a href="https://code.google.com/p/serpentine/issues/list">ici</a> pour m'aider si vous en avez envie.
+    </div>
+
+    <div class="main_text nav">
+    <p>Choisissez d'abord une trace à visualiser</p>
+        {% include "gps/nav.html" %}
+    </div>
+{% endblock main_content%}
+
+

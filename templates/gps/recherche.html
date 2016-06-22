@@ -1,0 +1,39 @@
+{% extends "gps/base.html" %}
+{#{% load replace %}#}
+{% block title %}
+Listes de traces disponibles
+{% endblock %}
+{% block content %}
+
+<h1>Page indisponible en cours de migration</h1>
+<div id="searchfilters">
+</div>
+<table class="searchresults" width="100%" cellspacing="0" cellpadding="0">
+    <tr>
+        <th></th>
+        <th>Type</th>
+        <th>id</th>
+        <th>Nom</th>
+        <th>Description</th>
+    </tr>
+    {% for resultat in resultats %}
+    <tr class="{% cycle odd,even %}">
+        <td>{{ forloop.counter }}</td>
+        <td><a href="/trace/{{ resultat.id }}?recherche={{ criteria }}">{{ resultat.type }}</a></td>
+        <td><a href="/trace/{{ resultat.id }}?recherche={{ criteria }}">{{ resultat.id }}</a></td>
+        <td><a href="/trace/{{ resultat.id }}?recherche={{ criteria }}">{{ resultat.nom|safe }}</a>
+        </td>
+        <td>
+            <a href="/trace/{{ resultat.id }}?recherche={{ criteria }}">
+                {% for p in resultat.properties %} ({{ p.value|safe }}) {% endfor %}
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% block sidebar_intro %}
+{% endblock sidebar_intro %}
+{% endblock content %}
+
