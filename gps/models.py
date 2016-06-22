@@ -3,8 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 # from django.conf import settings
 import datetime
-import lib
-import geonames
+from . import lib
+from . import geonames
 import json
 from django.db.models import Avg, Max, Min, Count
 from django.db import transaction
@@ -34,7 +34,7 @@ class Trace(models.Model):
                + ' nb pts ' +unicode(nb_points) + 'total time ' + self.get_formatted_time()
         """
 
-    @transaction.commit_manually
+    @transaction.atomic()
     def create_from_file(self, file):
         """ cree les elements (points) de la traces depuis un fichier
             met à jour la date de trace à la date de 
@@ -60,7 +60,7 @@ class Trace(models.Model):
         # zfile.close
         # os.remove(file)
 
-    @transaction.commit_manually
+    @transaction.atomic
     def create_from_array(self, points):
         """ cree les element depuis une tableau de points """
         for p in points:
@@ -87,7 +87,7 @@ class Trace(models.Model):
         pp.value = pvalue
         pp.save()
 
-    @transaction.commit_manually
+    @transaction.atomic
     def set_properties(self, with_geonames = True):
         """ (ré) affecte toutes les propriétés de la trace dans la base de donnée"""
         #on va chercher les propriétés du segment
@@ -103,7 +103,7 @@ class Trace(models.Model):
             raise
         return self
 
-    @transaction.commit_manually
+    @transaction.atomic
     def clear_properties(self, with_geonames = True):
         """ supprime toutes les propriétés de la trace dans la base de donnée"""
         try:
@@ -440,7 +440,7 @@ class Trace(models.Model):
 
 
     #traitements sur les points de la trace
-    @transaction.commit_manually
+    @transaction.atomic
     def compute_distances(self):
         """ compute distances from the first point to the last point """
         current_lat, current_lon = 0.0, 0.0
@@ -456,7 +456,7 @@ class Trace(models.Model):
             current_lon = p.longitude
         transaction.commit()
 
-    @transaction.commit_manually
+    @transaction.atomic
     def compute_speeds(self):
         """ compute instant speed for every point of the Trace object  """
         tp = Trace_point.objects.filter(trace=self).order_by('time')

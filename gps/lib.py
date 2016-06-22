@@ -63,9 +63,8 @@ def getPointsFromGpx(g):
             current_lat, current_lon = lat, lon
     points = setDistancesSpeedsAndHeadings(points)
     #check points
-    for p in points:
-        if p['time'] == None or p['speed'] == None or p['distance'] == None:
-            raise Exception, 'point pas initialisé ' + str(p['order_num'])
+
+
     return points
 
 
@@ -183,7 +182,7 @@ def createGpxXml(points, name):
 
     p1 = doc.createElement("time")
     maincard.appendChild(p1)
-    ptext1 = doc.createTextNode(unicode(points[0]['time']))
+    ptext1 = doc.createTextNode((points[0]['time']))
     p1.appendChild(ptext1)
 
     b = getLatLonBounds(points)
@@ -204,14 +203,14 @@ def createGpxXml(points, name):
 
     for pt in points:
         trkPointNode = doc.createElement("trkpt")
-        trkPointNode.setAttribute('lat', unicode(pt['lat']))
-        trkPointNode.setAttribute('lon', unicode(pt['lon']))
+        trkPointNode.setAttribute('lat', (pt['lat']))
+        trkPointNode.setAttribute('lon', (pt['lon']))
         trkSegNode.appendChild(trkPointNode)
         eleNode = doc.createElement('ele')
-        eleNode.appendChild(doc.createTextNode(unicode(pt['ele'])))
+        eleNode.appendChild(doc.createTextNode((pt['ele'])))
         trkPointNode.appendChild(eleNode)
         timeNode = doc.createElement('time')
-        timeNode.appendChild(doc.createTextNode(unicode(pt['time'])))
+        timeNode.appendChild(doc.createTextNode((pt['time'])))
         trkPointNode.appendChild(timeNode)
     return doc
 

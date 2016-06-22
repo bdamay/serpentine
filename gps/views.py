@@ -5,7 +5,7 @@ from django.conf import settings
 from django.template import Context, RequestContext, loader
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.core.context_processors import csrf
+from django.template.context_processors import csrf
 # from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 # from django import forms
@@ -26,7 +26,7 @@ from gps.forms import TrackForm, UploadForm, QuickLoginForm, QuickSearchForm
 #import urls 
 
 #Main context processor (defined in settings.py)
-@login_required
+
 def main_context(request):
     d = {}
     #dernières traces 
@@ -54,7 +54,7 @@ def main_context(request):
 
 
 #html pages
-@login_required
+
 def index(request):
     d = {}
     d['all_traces'] = Trace.objects.all().order_by('-tdate')
@@ -93,6 +93,15 @@ def recherche(request):
         c['criteria'] = request.GET['recherche']
     rsp = render_to_response('gps/recherche.html', c, context_instance=RequestContext(request))
     return rsp
+
+def samples(request):
+    c = {}
+    if request.method == 'GET' and 'recherche' in request.GET:
+        c['resultats'] = Trace.get_search_results(request.GET['recherche'])
+        c['criteria'] = request.GET['recherche']
+    rsp = render_to_response('gps/recherche.html', c, context_instance=RequestContext(request))
+    return rsp
+
 
 #records
 @login_required

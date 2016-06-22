@@ -1,49 +1,50 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import  include, url
 from django.http import HttpResponse
-#from views import *
+from django.contrib.auth import views as auth_views
+from . import views 
 
-urlpatterns = patterns('',
+urlpatterns = [
                        #APPLICATION gps
-                       (r'^$', 'gps.views.index'),
-                       (r'^recherche/$', 'gps.views.recherche'),
+                       url(r'^$', views.index),
+                       url(r'^recherche/$', views.recherche),
+                       url(r'^samples/$', views.samples),
                        #gpx file
-                       (r'^trace/(\d+).gpx', 'gps.views.gpx'),
+                       url(r'^trace/(\d+).gpx', views.gpx),
                        #view_trace html
-                       (r'^trace/(?P<num>\d+)$', 'gps.views.view_trace'),
-                       (r'^traceinfo/(\d+)', 'gps.views.trace_info_html'),
-                       (r'^traceshortinfo/(\d+)', 'gps.views.trace_short_info_html'),
-                       (r'^tracetabs/(traces(?:/\d+)+)?/(segment(?:/\d+)+)?', 'gps.views.trace_tabs_html'),
-                       (r'^tracestats/(\d+)', 'gps.views.trace_stats'),
+                       url(r'^trace/(?P<num>\d+)$', views.view_trace),
+                       url(r'^traceinfo/(\d+)', views.trace_info_html),
+                       url(r'^traceshortinfo/(\d+)', views.trace_short_info_html),
+                       url(r'^tracetabs/(traces(?:/\d+)+)?/(segment(?:/\d+)+)?', views.trace_tabs_html),
+                       url(r'^tracestats/(\d+)', views.trace_stats),
                        #records
-                       (r'^records/$', 'gps.views.records'),
+                       url(r'^records/$', views.records),
                        #blocks html (nav ... )
-                       (r'^nav.html', 'gps.views.nav_html'),
-                       (r'^nearby.html', 'gps.views.nearby'),
+                       url(r'^nav.html', views.nav_html),
+                       url(r'^nearby.html', views.nearby),
                        #edit tracks
-                       (r'^edit/(\d+)', 'gps.views.edit'),
+                       url(r'^edit/(\d+)', views.edit),
                        #upload files
-                       (r'^upload/$', 'gps.views.upload'),
-                       (r'^modify/$', 'gps.views.modify'),
+                       url(r'^upload/$', views.upload),
+                       url(r'^modify/$', views.modify),
                        #login logout register
-                       (r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'gps/login.html'}),
-                       (r'^logout/$', 'gps.views.logout'),
-                       (r'^login/$', 'gps.views.login'),
-                       (r'^register/$', 'gps.views.register'),
+                       url(r'^accounts/login/$', auth_views.login, {'template_name': 'gps/login.html'}),
+                       url(r'^logout/$', views.logout),
+                       url(r'^login/$', views.login),
+                       url(r'^register/$', views.register),
                        #JSON urls (usuall called with track number ?t=N)
-                       (r'^trace/json$', 'gps.views.trace_json'),
-                       (r'^trace/json_info$', 'gps.views.trace_json_info'),
-                       (r'^trace/json_index$', 'gps.views.trace_json_index'),
+                       url(r'^trace/json$', views.trace_json),
+                       url(r'^trace/json_info$', views.trace_json_info),
+                       url(r'^trace/json_index$', views.trace_json_index),
                        #User urls
-                       (r'^user/records/$', 'gps.views.user_records'),
-                       (r'^user/profile$', 'gps.views.user_profile'),
+                       url(r'^user/records/$', views.user_records),
+                       url(r'^user/profile$', views.user_profile),
                        #JSON urls (called with track number ?t=N&t2=...)
-                       (r'^trace/json_segments$', 'gps.views.trace_segment_json'),
+                       url(r'^trace/json_segments$', views.trace_segment_json),
                        #ajax cookies
-                       (r'^setmaptype/(?P<maptype>ol|ign)', 'gps.views.set_maptype'),
+                       url(r'^setmaptype/(?P<maptype>ol|ign)', views.set_maptype),
                        #tests
-                       (r'^test_cookies', 'gps.views.test_cookies'),
-                       (r'^test_ign', 'gps.views.test_ign'),
+                       url(r'^test_cookies', views.test_cookies),
+                       url(r'^test_ign', views.test_ign),
                        #robots deny
-                       (r'^robots.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /", mimetype="text/plain")),
-)
-
+                       url(r'^robots.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /", mimetype="text/plain")),
+]

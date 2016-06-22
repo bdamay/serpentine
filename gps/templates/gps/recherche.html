@@ -1,11 +1,11 @@
 {% extends "gps/base.html" %}
-{% load replace %}
+{#{% load replace %}#}
 {% block title %}
-Résultats de la recherche
+Listes de traces disponibles
 {% endblock %}
 {% block content %}
-<p style="background-color:red;">Résultats de recherche sur &laquo;{{ criteria }}&raquo; (en cours de développement !!!
-    )</p>
+
+<h1>Page indisponible en cours de migration</h1>
 <div id="searchfilters">
 </div>
 <table class="searchresults" width="100%" cellspacing="0" cellpadding="0">
@@ -21,11 +21,11 @@ Résultats de la recherche
         <td>{{ forloop.counter }}</td>
         <td><a href="/trace/{{ resultat.id }}?recherche={{ criteria }}">{{ resultat.type }}</a></td>
         <td><a href="/trace/{{ resultat.id }}?recherche={{ criteria }}">{{ resultat.id }}</a></td>
-        <td><a href="/trace/{{ resultat.id }}?recherche={{ criteria }}">{{ resultat.nom|boldify:criteria|safe }}</a>
+        <td><a href="/trace/{{ resultat.id }}?recherche={{ criteria }}">{{ resultat.nom|safe }}</a>
         </td>
         <td>
             <a href="/trace/{{ resultat.id }}?recherche={{ criteria }}">
-                {% for p in resultat.properties %} ({{ p.value|boldify:criteria|safe }}) {% endfor %}
+                {% for p in resultat.properties %} ({{ p.value|safe }}) {% endfor %}
             </a>
         </td>
     </tr>
